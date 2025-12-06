@@ -1,0 +1,7 @@
+# YOLO dataset config (edit values before training)
+path: ../1_dataset
+train: images/train
+val: images/val
+test: images/test
+nc: 1
+names: ["class0"]

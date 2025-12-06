@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.venv/
+env/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Python logs
+*.log
+
+# VSCode
+.vscode/
+
+# Model weights
+yolov11_training/weights/
