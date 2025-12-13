@@ -7,6 +7,3 @@ matplotlib
 ultralytics
 PyQt5
 
-# Optional (choose based on your environment):
-# tensorboard
-# pandas
