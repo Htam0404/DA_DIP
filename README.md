@@ -20,7 +20,8 @@ DA_DIP/
 ## 🛠️ Cài đặt
 
 ### Yêu cầu hệ thống
-- Python 3.8+ ([Download](https://www.python.org/downloads/))
+- **Python 3.11.9** ([Download](https://www.python.org/ftp/python/3.11.9/python-3.11.9-amd64.exe)) 
+- Visual C++ Redistributable ([Download](https://aka.ms/vs/17/release/vc_redist.x64.exe))
 
 ### Cài đặt nhanh
 
@@ -29,50 +30,70 @@ DA_DIP/
 git clone https://github.com/Htam0404/DA_DIP.git
 cd DA_DIP
 
-# 2. Tạo virtual environment (khuyến nghị)
+# 2. Tạo virtual environment với Python 3.11
 python -m venv venv
-venv\Scripts\activate  
+# Hoặc chỉ định đường dẫn cụ thể:
+# C:\Users\<YourName>\AppData\Local\Programs\Python\Python311\python.exe -m venv venv
 
-# 3. Cài PyTorch CPU version
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+# 3. Kích hoạt virtual environment (Windows)
+venv\Scripts\activate
 
-# 4. Cài các thư viện còn lại
-pip install -r requirements.txt
+
+# 4. Cài đặt dependencies với PyTorch 2.5.1
+venv\Scripts\python.exe -m pip install -r requirements.txt
+venv\Scripts\python.exe -m pip uninstall torch torchvision -y
+venv\Scripts\python.exe -m pip install torch==2.5.1 torchvision==0.20.1 --index-url https://download.pytorch.org/whl/cpu
 
 # 5. Copy model vào app
-copy 2_training\best.pt 3_application\model\best.pt  
-
+copy 2_training\best.pt 3_application\model\best.pt  # Windows
 ```
 
 ### ⚠️ Xử lý lỗi DLL (Windows)
 
-Nếu gặp lỗi `DLL initialization failed`:
-1. Tải [Visual C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe)
-2. Cài đặt và khởi động lại máy
-3. Chạy lại `pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu`
+Nếu gặp lỗi `OSError: [WinError 1114] A dynamic link library (DLL) initialization failed`:
+
+**Giải pháp đã test:**
+1. **Cài Visual C++ Redistributable** ([Download](https://aka.ms/vs/17/release/vc_redist.x64.exe))
+2. **Dùng Python 3.11.9** thay vì Python 3.10 hoặc 3.12
+3. **Cài PyTorch 2.5.1** (phiên bản ổn định hơn 2.9.1):
+   ```bash
+   venv\Scripts\python.exe -m pip uninstall torch torchvision -y
+   venv\Scripts\python.exe -m pip install torch==2.5.1 torchvision==0.20.1 --index-url https://download.pytorch.org/whl/cpu
+   ```
+4. Khởi động lại máy sau khi cài Visual C++
 
 ## 🚀 Sử dụng
 
 **Giao diện PyQt5:**
 ```bash
 cd 3_application
-py app.py
+..\venv\Scripts\python.exe app.py
+# Hoặc nếu đã activate venv:
+# python app.py
 ```
 
 **Command line:**
 ```bash
-py predict_image.py  
-py camera.py        
+cd 3_application
+..\venv\Scripts\python.exe predict_image.py  
+..\venv\Scripts\python.exe camera.py        
 ```
+
 
 **Phím tắt camera:** `q` (thoát) | `s` (lưu frame) | `+/-` (điều chỉnh threshold)
 
 ## 📦 Dependencies
 
-- Python 3.8+
-- PyTorch (CPU only)
+- **Python 3.11.9** (khuyến nghị)
+- **PyTorch 2.5.1** (CPU only - tương thích tốt)
 - Ultralytics YOLO
 - OpenCV
 - PyQt5
 - NumPy
+- Visual C++ Redistributable
+
+## 📊 Dataset
+
+3 classes: 🍎 Apple | 🍌 Banana | 🍊 Orange
+
 
