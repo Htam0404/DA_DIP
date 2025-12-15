@@ -1,6 +1,6 @@
 # 🍎 YOLO Fruit Detection App
 
-Ứng dụng nhận dạng trái cây (apple, banana, orange) sử dụng YOLOv8 với giao diện PyQt5.
+Ứng dụng nhận dạng trái cây (apple, banana, orange) sử dụng YOLO11n với giao diện PyQt5.
 
 ## 📁 Cấu trúc
 
