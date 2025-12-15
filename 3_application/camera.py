@@ -25,10 +25,11 @@ class CameraPredictor:
         
         print(f"Loading YOLO model from {model_path}...")
         self.model = YOLO(model_path)
+        self.model.to('cpu')
         self.class_names = class_names
         self.colors = generate_colors(len(class_names))
         self.is_running = False
-        print("Model loaded successfully!")
+        print("Model loaded successfully (CPU mode)!")
         
     def run(self, camera_id: int = 0, confidence_threshold: float = 0.5, 
             display_fps: bool = True):

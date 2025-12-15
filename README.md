@@ -2,14 +2,6 @@
 
 Ứng dụng nhận dạng trái cây (apple, banana, orange) sử dụng YOLOv8 với giao diện PyQt5.
 
-## ✨ Tính năng
-
-- 🖼️ Nhận dạng từ ảnh tĩnh
-- 📹 Camera realtime detection
-- 🎨 Giao diện PyQt5 hiện đại
-- 📊 Hiển thị confidence score và bounding box
-- ⚙️ Điều chỉnh confidence threshold
-
 ## 📁 Cấu trúc
 
 ```
@@ -27,11 +19,40 @@ DA_DIP/
 
 ## 🛠️ Cài đặt
 
+### Yêu cầu hệ thống
+- Python 3.8+ ([Download](https://www.python.org/downloads/))
+- RAM tối thiểu 4GB
+- **KHÔNG cần GPU** - App chạy trên CPU
+
+### Cài đặt nhanh
+
 ```bash
+# 1. Clone repository
 git clone https://github.com/Htam0404/DA_DIP.git
 cd DA_DIP
-py -m pip install -r requirements.txt  # Windows
+
+# 2. Tạo virtual environment (khuyến nghị)
+python -m venv venv
+venv\Scripts\activate  # Windows
+# source venv/bin/activate  # Linux/Mac
+
+# 3. Cài PyTorch CPU version
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+
+# 4. Cài các thư viện còn lại
+pip install -r requirements.txt
+
+# 5. Copy model vào app
+copy 2_training\best.pt 3_application\model\best.pt  # Windows
+# cp 2_training/best.pt 3_application/model/best.pt  # Linux/Mac
 ```
+
+### ⚠️ Xử lý lỗi DLL (Windows)
+
+Nếu gặp lỗi `DLL initialization failed`:
+1. Tải [Visual C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe)
+2. Cài đặt và khởi động lại máy
+3. Chạy lại `pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu`
 
 ## 🚀 Sử dụng
 
@@ -43,21 +64,25 @@ py app.py
 
 **Command line:**
 ```bash
-py predict_image.py  # Nhận dạng ảnh
-py camera.py        # Camera realtime
+py predict_image.py  
+py camera.py        
 ```
 
 **Phím tắt camera:** `q` (thoát) | `s` (lưu frame) | `+/-` (điều chỉnh threshold)
 
 ## 📦 Dependencies
 
-Python 3.8+ • PyTorch • YOLOv8 • OpenCV • PyQt5 • NumPy
+- Python 3.8+
+- PyTorch (CPU only)
+- Ultralytics YOLO
+- OpenCV
+- PyQt5
+- NumPy
+
+**Lưu ý**: App chạy hoàn toàn trên CPU, không cần GPU/CUDA
 
 ## 📊 Dataset
 
 3 classes: 🍎 Apple | 🍌 Banana | 🍊 Orange
 
-## 👥 Team
-
-DA_DIP - Fruit Detection with YOLO • License: CC BY 4.0
 

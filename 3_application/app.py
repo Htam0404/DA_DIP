@@ -36,8 +36,9 @@ class CameraWorker(QThread):
         """Chạy camera detection"""
         from ultralytics import YOLO
         
-        # Load model
+        # Load model (CPU mode)
         self.predictor = YOLO(self.model_path)
+        self.predictor.to('cpu')
         
         # Mở camera
         cap = cv2.VideoCapture(self.camera_id)
@@ -310,12 +311,10 @@ class YOLOApp(QMainWindow):
             return
         
         try:
-            # Predict với threshold thấp để lấy tất cả detections
-            initial_threshold = 0.1 if self.auto_threshold_enabled else self.confidence_threshold
-            
+            # Predict với threshold người dùng chọn
             results = self.image_predictor.model.predict(
                 self.current_image,
-                conf=initial_threshold,
+                conf=self.confidence_threshold,
                 verbose=False
             )
             

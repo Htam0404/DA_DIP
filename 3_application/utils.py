@@ -53,10 +53,9 @@ def non_max_suppression_custom(boxes: List[Tuple], iou_threshold: float = 0.5) -
     if not boxes:
         return []
     
-    # Chuyển sang numpy array để xử lý nhanh hơn
     boxes_array = np.array(boxes)
     
-    # Lấy tọa độ
+ 
     x1 = boxes_array[:, 0]
     y1 = boxes_array[:, 1]
     x2 = boxes_array[:, 2]
@@ -64,22 +63,18 @@ def non_max_suppression_custom(boxes: List[Tuple], iou_threshold: float = 0.5) -
     scores = boxes_array[:, 4]
     classes = boxes_array[:, 5]
     
-    # Tính diện tích
     areas = (x2 - x1) * (y2 - y1)
     
-    # Sắp xếp theo confidence giảm dần
     order = scores.argsort()[::-1]
     
     keep = []
     while order.size > 0:
-        # Giữ box có confidence cao nhất
         i = order[0]
         keep.append(i)
         
         if order.size == 1:
             break
         
-        # Tính IoU với các boxes còn lại
         xx1 = np.maximum(x1[i], x1[order[1:]])
         yy1 = np.maximum(y1[i], y1[order[1:]])
         xx2 = np.minimum(x2[i], x2[order[1:]])
@@ -91,7 +86,6 @@ def non_max_suppression_custom(boxes: List[Tuple], iou_threshold: float = 0.5) -
         
         iou = intersection / (areas[i] + areas[order[1:]] - intersection)
         
-        # Giữ các boxes có IoU thấp (không trùng lặp) và cùng class
         same_class = classes[i] == classes[order[1:]]
         inds = np.where((iou <= iou_threshold) | (~same_class))[0]
         order = order[inds + 1]
@@ -105,7 +99,7 @@ def draw_bounding_boxes(image: np.ndarray,
                        colors: List[Tuple[int, int, int]],
                        confidence_threshold: float = 0.5,
                        apply_nms: bool = True,
-                       max_detections: int = 5) -> np.ndarray:
+                       max_detections: int = 50) -> np.ndarray:
     """
     Vẽ bounding boxes và labels lên ảnh
     

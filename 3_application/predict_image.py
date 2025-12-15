@@ -26,9 +26,10 @@ class ImagePredictor:
         
         print(f"Loading YOLO model from {model_path}...")
         self.model = YOLO(model_path)
+        self.model.to('cpu')
         self.class_names = class_names
         self.colors = generate_colors(len(class_names))
-        print("Model loaded successfully!")
+        print("Model loaded successfully (CPU mode)!")
         
     def predict(self, image_path: str, confidence_threshold: float = 0.5, 
                 save_result: bool = False, output_path: str = None) -> tuple:
