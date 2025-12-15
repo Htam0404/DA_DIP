@@ -21,8 +21,6 @@ DA_DIP/
 
 ### Yêu cầu hệ thống
 - Python 3.8+ ([Download](https://www.python.org/downloads/))
-- RAM tối thiểu 4GB
-- **KHÔNG cần GPU** - App chạy trên CPU
 
 ### Cài đặt nhanh
 
@@ -33,8 +31,7 @@ cd DA_DIP
 
 # 2. Tạo virtual environment (khuyến nghị)
 python -m venv venv
-venv\Scripts\activate  # Windows
-# source venv/bin/activate  # Linux/Mac
+venv\Scripts\activate  
 
 # 3. Cài PyTorch CPU version
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
@@ -43,8 +40,8 @@ pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
 pip install -r requirements.txt
 
 # 5. Copy model vào app
-copy 2_training\best.pt 3_application\model\best.pt  # Windows
-# cp 2_training/best.pt 3_application/model/best.pt  # Linux/Mac
+copy 2_training\best.pt 3_application\model\best.pt  
+
 ```
 
 ### ⚠️ Xử lý lỗi DLL (Windows)
@@ -78,11 +75,4 @@ py camera.py
 - OpenCV
 - PyQt5
 - NumPy
-
-**Lưu ý**: App chạy hoàn toàn trên CPU, không cần GPU/CUDA
-
-## 📊 Dataset
-
-3 classes: 🍎 Apple | 🍌 Banana | 🍊 Orange
-
 
