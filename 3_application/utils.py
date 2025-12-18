@@ -99,7 +99,7 @@ def draw_bounding_boxes(image: np.ndarray,
                        colors: List[Tuple[int, int, int]],
                        confidence_threshold: float = 0.5,
                        apply_nms: bool = True,
-                       max_detections: int = 50) -> np.ndarray:
+                       max_detections: int = 20) -> np.ndarray:
     """
     Vẽ bounding boxes và labels lên ảnh
     
@@ -120,9 +120,17 @@ def draw_bounding_boxes(image: np.ndarray,
     # Lọc theo confidence threshold
     filtered_boxes = [box for box in boxes if box[4] >= confidence_threshold]
     
-    # Áp dụng NMS để loại bỏ boxes trùng lặp (IoU cao = loại bỏ nhiều)
+    # Áp dụng NMS để loại bỏ boxes trùng lặp
     if apply_nms and filtered_boxes:
-        filtered_boxes = non_max_suppression_custom(filtered_boxes, iou_threshold=0.3)
+        filtered_boxes = non_max_suppression_custom(filtered_boxes, iou_threshold=0.35)
+
+    # Loại bỏ boxes quá lớn (false positive bao toàn ảnh)
+    if filtered_boxes:
+        img_area = image.shape[0] * image.shape[1]
+        filtered_boxes = [
+            box for box in filtered_boxes 
+            if ((box[2] - box[0]) * (box[3] - box[1])) < (img_area * 0.65)
+        ]
     
     # Sắp xếp theo confidence giảm dần và chỉ lấy top detections
     filtered_boxes = sorted(filtered_boxes, key=lambda x: x[4], reverse=True)[:max_detections]
@@ -142,8 +150,8 @@ def draw_bounding_boxes(image: np.ndarray,
         thickness = 2
         cv2.rectangle(img_copy, (x1, y1), (x2, y2), color, thickness)
         
-        # Chỉ hiển thị tên class, không hiển thị confidence
-        text = f"{label}"
+        # Hiển thị tên class và confidence theo %
+        text = f"{label} {conf*100:.0f}%"
         
         # Font nhỏ hơn
         font_scale = 0.5

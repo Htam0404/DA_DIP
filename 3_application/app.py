@@ -91,7 +91,7 @@ class YOLOApp(QMainWindow):
         # Thiết lập các biến
         self.model_path = "model/best.pt"
         self.class_names = ['apple', 'banana', 'orange']
-        self.confidence_threshold = 0.65  # Tăng threshold mặc định
+        self.confidence_threshold = 0.70  # Tăng threshold mặc định
         self.current_image = None
         self.camera_worker = None
         self.auto_threshold_enabled = False  
@@ -162,7 +162,7 @@ class YOLOApp(QMainWindow):
         self.conf_slider = QSlider(Qt.Horizontal)
         self.conf_slider.setMinimum(0)
         self.conf_slider.setMaximum(100)
-        self.conf_slider.setValue(65)  # Mặc định 0.65
+        self.conf_slider.setValue(70)  # Mặc định 0.70
         self.conf_slider.valueChanged.connect(self.on_confidence_changed)
         slider_layout.addWidget(self.conf_slider)
         
